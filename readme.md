@@ -1,0 +1,1 @@
+Image is available in [docker hub](https://hub.docker.com/repository/docker/rickvm/php-ci)
