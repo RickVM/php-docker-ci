@@ -11,7 +11,7 @@ COPY --from=composer /usr/bin/composer /usr/bin/composer
 
 RUN apt-get update -y && apt-get install -y \
     libpng-dev \
-    zip unzip \
+    unzip \
     subversion
 
 RUN docker-php-ext-configure gd

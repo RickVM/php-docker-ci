@@ -1,3 +1,4 @@
+set -e
 # first login with docker! docker login --username=.... --password=...
 docker login
 
