@@ -1,28 +1,33 @@
 # Create a base image
-FROM php:7.2.26-apache-buster AS base
+# 16.04, 18.04, 20.04
+ARG VERSION=
+FROM php:${VERSION} AS base
 
 LABEL maintainer="rick.van.melis@peercode.nl"
 
-ENV PHP_OPCACHE_VALIDATE_TIMESTAMPS=0 \
-    PHP_OPCACHE_MAX_ACCELERATED_FILES=10000 \
-    PHP_OPCACHE_MEMORY_CONSUMPTION=128
+ENV TZ=Europe/Amsterdam
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    curl \
-    default-mysql-client \
-    libmagickwand-dev \
-     unzip \
-    imagemagick 
+COPY --from=composer /usr/bin/composer /usr/bin/composer
 
-RUN pecl install imagick xdebug
-RUN docker-php-ext-install sockets bcmath gd zip pdo_mysql   
-RUN  docker-php-ext-enable \
-            imagick \
-            xdebug \
-            opcache 
-            
-RUN a2enmod rewrite
+RUN apt-get update -y && apt-get install -y \
+    libpng-dev \
+    zip unzip \
+    subversion
 
-# Install Composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-RUN apt-get clean && rm -r /var/lib/apt/lists/*
+RUN docker-php-ext-configure gd
+RUN docker-php-ext-install gd zip
+
+
+# RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+#     php \
+#     libapache2-mod-php
+
+# FROM base AS build
+
+
+
+# FROM base AS debug
+# RUN pecl install imagick xdebug
+# RUN  docker-php-ext-enable \
+#             xdebug
+

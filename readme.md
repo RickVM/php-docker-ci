@@ -1,1 +1,4 @@
-Image is available in [docker hub](https://hub.docker.com/repository/docker/rickvm/php-ci)
+
+## Build
+
+Update.sh contains commands to build and push 16.04, 18.04 and 20.04 image  
