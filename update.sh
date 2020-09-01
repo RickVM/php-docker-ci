@@ -1,6 +1,10 @@
 set -e
-# first login with docker! docker login --username=.... --password=...
+
 docker login
+
+# For harbor:
+# docker build -t harbor.peercode.nl/ci-cd/php:7.0 --build-arg VERSION=7.0 .
+# docker push harbor.peercode.nl/ci-cd/php:7.0
 
 docker build -t rickvm/php-ci:7.0 --build-arg VERSION=7.0 .
 docker push rickvm/php-ci:7.0
